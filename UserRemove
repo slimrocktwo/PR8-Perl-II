@@ -1,0 +1,87 @@
+#!/bin/perl
+
+## CIS 140 PR8
+## Steve Langewicz II
+## 12-15-2016
+
+use 5.16.3;
+use warnings;
+
+my ($USERINFOIN, $DATAFILEOUT);
+my (@userData)
+my $zip = Archive::Zip->new();
+
+sub main {
+        verifyInputFile();
+        setDataFileIn();
+        readData();
+        zipData();
+        removeData();
+        printReport();
+        print "Job Complete. Exiting..";
+}
+
+sub verifyInputFile {
+	if (!(@ARGV) || !(-e $ARGV[0])) {
+		die "\n\nUser data is required to run this program. Exiting...\n\n";
+	}
+}
+
+sub setDataFileIn {
+	$USERINFOIN = $ARGV[0];
+}
+
+sub readData {
+	my $IN;
+	my $counter = 0;
+	@data = ();
+	open ($IN, '<', $USERINFOIN);
+	while (<$IN>) {
+		@tempData = split(/,/);
+		for (my $i = 0; $i < COLUMNS; $i++) {
+			chomp ($data[$counter][$i] = $userData[$i]);
+		}
+		$counter++;
+	}
+	close $IN;
+}
+
+sub zipData {
+    chdir ('/home/slangewicz/user_backups')'
+    my $dir_member = $zip->addDirectory( 'Zip$userData[$i]/' );
+
+
+}
+
+sub removeData {
+    my $length = length @userData;
+    $i = 1;
+    my $type = shift;
+    while ($userData <= $length){
+          my @directoryList = userData[i];
+          foreach $_ (@directoryList) {
+               if (-e $_ . $userName) {
+                    rm -r $userData[$i];
+                    print "\n\nData deleted for user $userName " . $_.$userName . "\n";
+               } else {
+                    print "\nNo data to delete for user $userName.\n";
+               }
+          }
+          $i = $1 - 1; #Changes from user dir to user name
+          system ("/usr/sbin/userdel $userData[$i]"); #deletes user account        
+          $i = $i + 3; #changes to next user dir
+     }
+}
+
+
+
+sub printReport {
+    system ("clear");
+    $i = 0;
+    my $length = length @userData;
+    while ($userData <= $length){
+        print "Deleted user $userData[$i], zip of data is at /home/slangewicz/user_backups/Zip$userData[$i]";
+        $i = $ + 1;    
+    }
+    sleep 10;
+}
